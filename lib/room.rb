@@ -3,10 +3,10 @@ module Hotel
   # NUM_OF_ROOMS = 20
 
   class Room
-      attr_reader
+      attr_reader :number
 
-    def initialize
-      # @rooms = [*1..20]
+    def initialize(initial_number)
+      @number = initial_number
     end
 
   end
