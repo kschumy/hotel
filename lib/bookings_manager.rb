@@ -15,6 +15,7 @@ module Hotel
 
     def initialize
       @rooms = [*1..20]
+      @reservations = []
     end
 
     def reserve_room(input_check_in_date, input_check_out_date)
