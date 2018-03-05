@@ -14,6 +14,9 @@ module Hotel
       check_if_valid_dates
     end
 
+    def has_reservation_on_date?(date)
+    end
+
     private
 
     # Returns the how long the reservation is in days.
@@ -24,9 +27,8 @@ module Hotel
     # Throw ArgumentError is check_in_date or check_out_date are not Dates or if
     # check_in_date is not at least one day before check_out_date.
     def check_if_valid_dates
-      if @check_in_date.class != Date || @check_out_date.class != Date
-        raise ArgumentError.new("Invalid Dates for check-in and/or out.")
-      end
+      Hotel.has_valid_date_or_error(@check_in_date)
+      Hotel.has_valid_date_or_error(@check_out_date)
       if length_of_reservation < 1
         raise ArgumentError.new("Reservation must be at least one day.")
       end
@@ -38,6 +40,13 @@ module Hotel
         raise ArgumentError.new("Invalid Id #{@id}. Must be int > 0")
       end
     end
+
+    # # Throw ArgumentError if provided date is not a Date.
+    # def valid_date_or_error(date)
+    #   if date.class != Date
+    #     raise ArgumentError.new("Invalid date #{date}.")
+    #   end
+    # end
 
   end
 end

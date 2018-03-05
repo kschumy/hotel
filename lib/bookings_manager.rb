@@ -11,7 +11,7 @@ module Hotel
   NUM_OF_ROOMS = 20
 
   class BookingsManager
-      attr_reader :rooms
+      attr_reader :rooms, :reservations
 
     def initialize
       @rooms = [*1..20]
@@ -25,11 +25,16 @@ module Hotel
         check_in_date: input_check_in_date,
         check_out_date: input_check_out_date
       }
-      new_reservation = Hotel::Reservation.new(reservation_info)
-      return new_reservation
+      @reservations << Hotel::Reservation.new(reservation_info)
+      return @reservations.last
+    end
+
+    def has_reservation_on_date?(date)
     end
 
     private
+
+    
 
   end
 end
