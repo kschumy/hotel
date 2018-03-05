@@ -16,6 +16,12 @@ describe "BookingsManager class" do
       @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
         14, 15, 16, 17, 18, 19, 20]
     end
+
+    it "creates a empty list for reservations" do
+      @manager.must_respond_to :reservations
+      @manager.reservations.must_be_kind_of Array
+      @manager.reservations.must_equal []
+    end
   end
 
   describe "Reserve Room" do
