@@ -6,22 +6,20 @@ describe "Reservation class" do
     before do
       @initial_id = 42
       @initial_room_number = 1
-      @initial_check_in_date = Date.new(2018,2,3)
-      @initial_check_out_date = Date.new(2018,2,5)
+      @initial_check_in = Date.new(2018,2,3)
+      @initial_check_out = Date.new(2018,2,5)
 
       @reservation_info = {
         id: @initial_id,
         room_number: @initial_room_number,
-        check_in_date: @initial_check_in_date,
-        check_out_date: @initial_check_out_date
+        check_in_date: @initial_check_in,
+        check_out_date: @initial_check_out
       }
-
       @reservation = Hotel::Reservation.new(@reservation_info)
     end
 
     it "is an instance of Reservation" do
-      new_reservation = Hotel::Reservation.new(@reservation_info)
-      new_reservation.must_be_instance_of Hotel::Reservation
+      @reservation.must_be_instance_of Hotel::Reservation
     end
 
     it "has a reservation number" do
@@ -39,18 +37,22 @@ describe "Reservation class" do
     it "has a check-in date" do
       @reservation.must_respond_to :check_in_date
       @reservation.check_in_date.must_be_kind_of Date
-      @reservation.check_in_date.must_equal @initial_check_in_date
+      @reservation.check_in_date.must_equal @initial_check_in
     end
 
     it "has a check-out date" do
       @reservation.must_respond_to :check_out_date
       @reservation.check_out_date.must_be_kind_of Date
-      @reservation.check_out_date.must_equal @initial_check_out_date
+      @reservation.check_out_date.must_equal @initial_check_out
     end
 
     it "throws an error is id is not an Integer" do
       proc {
         @reservation_info[:id] = "Look at me. I am the id now."
+        new_reservation = Hotel::Reservation.new(@reservation_info)
+      }.must_raise ArgumentError
+      proc {
+        @reservation_info[:id] = nil
         new_reservation = Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
@@ -67,11 +69,19 @@ describe "Reservation class" do
         @reservation_info[:check_in_date] = "I am not a check-in date."
         new_reservation = Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
+      proc {
+        @reservation_info[:check_in_date] = nil
+        new_reservation = Hotel::Reservation.new(@reservation_info)
+      }.must_raise ArgumentError
     end
 
     it "throws an error is check-out is not a date" do
       proc {
         @reservation_info[:check_out_date] = "I am not a check-out date."
+        new_reservation = Hotel::Reservation.new(@reservation_info)
+      }.must_raise ArgumentError
+      proc {
+        @reservation_info[:check_out_date] = nil
         new_reservation = Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
