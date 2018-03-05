@@ -13,6 +13,15 @@ module Hotel
       @rooms = [*1..20]
     end
 
+    def reserve_room(check_in_date, check_out_date)
+
+    end
+
+    private
+
+    def check_if_valid_dates
+    end
+
   end
 end
 
