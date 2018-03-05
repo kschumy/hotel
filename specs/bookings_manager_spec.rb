@@ -48,14 +48,14 @@ describe "BookingsManager class" do
       reservation.check_out_date.must_equal @initial_check_out
     end
 
-    # it "creates a list of rooms (numbers)" do
-    #   manager = Hotel::BookingsManager.new
-    #
-    #   manager.must_respond_to :rooms
-    #   manager.rooms.must_be_kind_of Array
-    #   manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-    #     14, 15, 16, 17, 18, 19, 20]
-    # end
+    it "adds the new reservation to the reservations list" do
+      num_of_reservations_before = @manager.reservations.length
+      reservation = @manager.reserve_room(@initial_check_in, @initial_check_out)
+
+      @manager.reservations.last.must_equal reservation
+      @manager.reservations.length.must_equal (num_of_reservations_before + 1)
+    end
+
   end
 
 end
