@@ -2,6 +2,10 @@
 # require_relative 'passenger'
 # require_relative 'trip'
 
+# QUESTION: is it better to check if valid date immediately or wait until making
+# reservation?
+
+
 module Hotel
   # ROOM_RATE = 200.0
   NUM_OF_ROOMS = 20
@@ -13,14 +17,18 @@ module Hotel
       @rooms = [*1..20]
     end
 
-    def reserve_room(check_in_date, check_out_date)
-
+    def reserve_room(input_check_in_date, input_check_out_date)
+      reservation_info = {
+        id: rand(1..99),
+        room_number: rand(1..20),
+        check_in_date: input_check_in_date,
+        check_out_date: input_check_out_date
+      }
+      new_reservation = Hotel::Reservation.new(reservation_info)
+      return new_reservation
     end
 
     private
-
-    def check_if_valid_dates
-    end
 
   end
 end

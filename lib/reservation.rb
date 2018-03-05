@@ -1,3 +1,5 @@
+# QUESTION: when should I check for valid?
+
 module Hotel
 
   class Reservation
