@@ -48,6 +48,20 @@ describe "Reservation class" do
       @reservation.check_out_date.must_equal @initial_check_out_date
     end
 
+    it "throws an error is id is not an Integer" do
+      proc {
+        @reservation_info[:id] = "Look at me. I am the id now."
+        new_reservation = Hotel::Reservation.new(@reservation_info)
+      }.must_raise ArgumentError
+    end
+
+    it "throws an error is id is less than 1" do
+      proc {
+        @reservation_info[:id] = 0
+        new_reservation = Hotel::Reservation.new(@reservation_info)
+      }.must_raise ArgumentError
+    end
+
     it "throws an error is check-in is not a date" do
       proc {
         @reservation_info[:check_in_date] = "I am not a check-in date."
@@ -62,18 +76,20 @@ describe "Reservation class" do
       }.must_raise ArgumentError
     end
 
-    it "throws an error if check-in is 1+ days before check-out" do
+    it "throws an error if check-in is the same day as check-out" do
       proc {
         @reservation_info[:check_in_date] = Date.new(2018,2,5)
         @reservation_info[:check_out_date] = Date.new(2018,2,5)
         new_reservation = Hotel::Reservation.new(@reservation_info)
-      }.must_raise ArgumentError # same day
+      }.must_raise ArgumentError
+    end
 
+    it "throws an error if check-in is after check-out" do
       proc {
         @reservation_info[:check_in_date] = Date.new(2018,2,5)
         @reservation_info[:check_out_date] = Date.new(2018,2,4)
         new_reservation = Hotel::Reservation.new(@reservation_info)
-      }.must_raise ArgumentError # negative days
+      }.must_raise ArgumentError
     end
 
   end
