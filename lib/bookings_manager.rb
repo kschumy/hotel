@@ -6,8 +6,6 @@ module Hotel
   # ROOM_RATE = 200.0
   NUM_OF_ROOMS = 20
 
-
-
   class BookingsManager
       attr_reader :rooms
 
