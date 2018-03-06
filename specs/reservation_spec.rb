@@ -101,6 +101,28 @@ describe "Reservation class" do
         Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
+  end # end of Initializer
 
-  end
-end
+  describe "Get Cost" do
+    before do
+      @initial_id = 42
+      @initial_room_number = 1
+      @initial_check_in = Date.new(2018,2,3)
+      @initial_check_out = Date.new(2018,2,5)
+
+      @reservation_info = {
+        id: @initial_id,
+        room_number: @initial_room_number,
+        check_in: @initial_check_in,
+        check_out: @initial_check_out
+      }
+      @reservation = Hotel::Reservation.new(@reservation_info)
+    end
+
+    it 'returns the cost' do
+      @reservation.get_cost.must_equal 200.0 * 2
+    end
+  end # end of Get Cost
+
+
+end # end of Reservation
