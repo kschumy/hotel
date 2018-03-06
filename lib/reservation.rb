@@ -14,8 +14,9 @@ module Hotel
       check_if_valid_dates
     end
 
-    # def has_reservation_on_date?(date)
-    # end
+    def get_cost
+      return (length_of_reservation * ROOM_RATE).round(2)
+    end
 
     private
 
@@ -40,13 +41,6 @@ module Hotel
         raise ArgumentError.new("Invalid Id #{@id}. Must be int > 0")
       end
     end
-
-    # # Throw ArgumentError if provided date is not a Date.
-    # def valid_date_or_error(date)
-    #   if date.class != Date
-    #     raise ArgumentError.new("Invalid date #{date}.")
-    #   end
-    # end
 
   end
 end

@@ -1,4 +1,6 @@
 module Hotel
+  ROOM_RATE = 200.0
+  NUM_OF_ROOMS = 20
 
   # Throw ArgumentError if provided date is not a Date.
   def self.has_valid_date_or_error(date)
