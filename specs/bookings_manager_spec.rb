@@ -10,17 +10,20 @@ describe 'BookingsManager class' do
       @manager.must_be_instance_of Hotel::BookingsManager
     end
 
-    it 'creates a list of rooms (numbers)' do
+    it 'creates a list of rooms' do
       @manager.must_respond_to :rooms
       @manager.rooms.must_be_kind_of Array
-      @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-        14, 15, 16, 17, 18, 19, 20]
+      (@manager.rooms.all? { |room| room.class == Hotel::Room }).must_equal true
+    end
+
+    it 'assigns room numbers in order' do
+      @manager.rooms.first.number.must_equal 1
+      @manager.rooms.last.number.must_equal 20
     end
 
     it 'does not return the original list of rooms' do
       @manager.rooms.pop
-      @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
-        14, 15, 16, 17, 18, 19, 20]
+      @manager.rooms.length.must_equal 20
     end
 
     it 'creates a empty list for reservations' do
@@ -119,5 +122,41 @@ describe 'BookingsManager class' do
       proc { @manager.get_reservation_cost("foo") }.must_raise ArgumentError
     end
   end # end of 'Get Reservation Cost'
+
+
+  # describe 'Get Available On Dates' do
+  #   it 'returns an empty list if no reservations on date range' do
+  #   #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+  #   #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
+  #   #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+  #   end
+  #   #
+  #   # it 'returns an list of reservations on date' do
+  #   #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
+  #   #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
+  #   #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
+  #   #
+  #   #   res_on_date.must_equal [res1, res2]
+  #   # end
+  #   #
+  #   # it 'only includes reservations that overlap with date' do
+  #   #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
+  #   #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
+  #   #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
+  #   #   @manager.reserve_room(Date.new(2018,2,6), Date.new(2018,2,7)) # after
+  #   #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
+  #   #
+  #   #   res_on_date.must_equal [res1, res2]
+  #   # end
+  #   #
+  #   # it 'does not include reservations that end on the date' do
+  #   #   @manager.reserve_room(Date.new(2018,2,2), Date.new(2018,2,5))
+  #   #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+  #   # end
+  #   #
+  #   # it "throws an ArgumentError for an invalid date" do
+  #   #   proc { @manager.get_reservations_on_date("foo") }.must_raise ArgumentError
+  #   # end
+  # end # end of 'Get Available On Dates'
 
 end # end of 'BookingsManager'
