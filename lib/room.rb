@@ -22,6 +22,11 @@ module Hotel
       return @reservations.dup
     end
 
+    def is_available?(date)
+      # LEFT OFF HERE!!
+      # need to write test and method in reservation to check if reservation conflicts
+    end
+
     private
 
     def check_initial_number
