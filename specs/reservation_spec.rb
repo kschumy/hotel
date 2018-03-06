@@ -142,25 +142,39 @@ describe 'Reservation class' do
     end
 
     it 'returns \'true\' if conflicts with reservation' do
-      start_date = Date.new(2018,2,2)
-      end_date = Date.new(2018,2,4) # overlap starts on 2018,2,3
+      start_date = Date.new(2018,2,2) # ok before but overlaps in mid
+      end_date = Date.new(2018,2,4)
       @reservation.conflicts_with?(start_date, end_date).must_equal true
 
-      start_date_2 = Date.new(2018,2,6)
+      start_date_2 = Date.new(2018,2,6) # ok after but overlaps in mid
       end_date_2 = Date.new(2018,2,9)
       @reservation.conflicts_with?(start_date_2, end_date_2).must_equal true
 
-      start_date_3 = Date.new(2018,2,5)
+      start_date_3 = Date.new(2018,2,5) # fits between start and end dates
       end_date_3 = Date.new(2018,2,6)
+      @reservation.conflicts_with?(start_date_3, end_date_3).must_equal true
+
+      start_date_3 = Date.new(2018,2,1) # completely overlaps other reservation
+      end_date_3 = Date.new(2018,2,9)
       @reservation.conflicts_with?(start_date_3, end_date_3).must_equal true
     end
 
     it 'returns \'false\' if does not conflict with reservation' do
       start_date = Date.new(2018,2,1)
-      end_date = Date.new(2018,2,2) # ends right before
+      end_date = Date.new(2018,2,2) # ends day before
       @reservation.conflicts_with?(start_date, end_date).must_equal false
 
-      start_date_2 = Date.new(2018,2,7) # starts day of end
+      start_date_2 = Date.new(2018,2,8) # starts day after
+      end_date_2 = Date.new(2018,2,9)
+      @reservation.conflicts_with?(start_date_2, end_date_2).must_equal false
+    end
+
+    it 'returns \'false\' with overlap on start and end dates' do
+      start_date = Date.new(2018,2,1)
+      end_date = Date.new(2018,2,3) # ends on day of check-in
+      @reservation.conflicts_with?(start_date, end_date).must_equal false
+
+      start_date_2 = Date.new(2018,2,7) # starts on day of check-out
       end_date_2 = Date.new(2018,2,8)
       @reservation.conflicts_with?(start_date_2, end_date_2).must_equal false
     end
