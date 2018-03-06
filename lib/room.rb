@@ -23,6 +23,7 @@ module Hotel
     end
 
     def is_available?(start_date, end_date)
+      Hotel.check_if_valid_dates(start_date, end_date)
       return !@reservations.any?{ |res| res.conflicts_with?(start_date, end_date) }
     end
 

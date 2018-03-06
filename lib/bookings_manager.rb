@@ -25,11 +25,12 @@ module Hotel
       return find_reservations_on_date(date)
     end
 
-    #
-    # def get_reservations_on_dates(dates)
-    #   Hotel.has_valid_date_or_error(date)
-    #   return find_reservations_on_date(date)
-    # end
+
+    def get_available_rooms(start_date, end_date)
+      # Hotel.has_valid_date_or_error(start_date)
+      # Hotel.has_valid_date_or_error(end_date)
+      return @rooms.collect { |room| room.is_available?(start_date, end_date)}
+    end
 
     #
     def get_reservation_cost(reservation_id)
