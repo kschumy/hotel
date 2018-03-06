@@ -16,5 +16,13 @@ describe "Room class" do
       room.number.must_equal 1
     end
 
+    it "throws error if invalid id" do
+      proc { Hotel::Room.new("foo") }.must_raise ArgumentError
+      proc { Hotel::Room.new(21) }.must_raise ArgumentError
+      proc { Hotel::Room.new(0) }.must_raise ArgumentError
+    end
+
+
+
   end
 end

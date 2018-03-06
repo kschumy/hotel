@@ -17,8 +17,9 @@ describe 'BookingsManager class' do
     end
 
     it 'assigns room numbers in order' do
-      @manager.rooms.first.number.must_equal 1
-      @manager.rooms.last.number.must_equal 20
+      @manager.rooms[0].number.must_equal 1
+      @manager.rooms[10].number.must_equal 11
+      @manager.rooms[19].number.must_equal 20
     end
 
     it 'does not return the original list of rooms' do
