@@ -1,3 +1,5 @@
+# QUESTION: circular logic about checking if reservation.room is 'this'?
+
 module Hotel
   # # ROOM_RATE = 200.0
   # NUM_OF_ROOMS = 20
@@ -11,6 +13,15 @@ module Hotel
       check_initial_number
     end
 
+    def add_reservation(reservation)
+      has_reservation_or_error(reservation)
+      add_reservation_to_reservations(reservation)
+    end
+
+    def reservations
+      return @reservations.dup
+    end
+
     private
 
     def check_initial_number
@@ -19,8 +30,14 @@ module Hotel
       end
     end
 
-    def add_reservation
+    def add_reservation_to_reservations(reservation)
+      @reservations << reservation
+    end
 
+    def has_reservation_or_error(reservation)
+      if reservation.class != Reservation
+        raise ArgumentError.new("#{reservation} is not a Reservation.")
+      end
     end
 
   end
