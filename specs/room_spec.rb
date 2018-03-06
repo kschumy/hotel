@@ -74,4 +74,53 @@ describe 'Room class' do
 
   end # end of 'Add Reservation'
 
+  describe 'Is Available?' do
+    before do
+      # @res_one_info = {id: 21, room_number: 12,
+      #   check_in: Date.new(2018,2,3), check_out: Date.new(2018,2,8)}
+      # @res_two_info = {id: 83, room_number: 12,
+      #   check_in: Date.new(2018,2,12), check_out: Date.new(2018,2,17)}
+      @room = Hotel::Room.new(3)
+      @room.add_reservation(Hotel::Reservation.new({id: 21, room_number: 12,
+        check_in: Date.new(2018,2,3), check_out: Date.new(2018,2,8)}))
+      @room.add_reservation(Hotel::Reservation.new({id: 83, room_number: 12,
+        check_in: Date.new(2018,2,12), check_out: Date.new(2018,2,17)}))
+
+      # @room = Hotel::Room.new(3)
+      # @room.add_reservation()
+      # @room.add_reservation(Hotel::Reservation.new(@res_two_info))
+    end
+
+    it 'returns true if is available in range' do
+      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,11)).must_equal true
+    end
+
+    it 'returns true if available on another reservation end date' do
+      @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,11)).must_equal true
+    end
+
+    it 'returns true if end date is on another reservation start date' do
+      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,12)).must_equal true
+      # @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,12)).must_equal true
+    end
+
+    it 'returns start and end overlap with start/end of two reservations' do
+      @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,12)).must_equal true
+    end
+
+    it 'throws error if overlaps on non-start/end dates' do
+      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,13)).must_equal false
+    end
+
+    it 'throws error if overlaps on non-start/end dates' do
+      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,13)).must_equal false
+    end
+
+    # it 'throws error if the reservation is not a Reservation' do
+    #   proc {
+    #     @room.is_available?("foo", Date.new(2018,2,11))
+    #   }.must_raise ArgumentError
+    # end
+  end # end of 'Is Available?'
+
 end # end of 'Room'
