@@ -30,8 +30,17 @@ describe 'Room class' do
     end
 
     it 'returns a copy of reservations' do
-      # TODO: completed when done
-      # @room.reservations.must_equal []
+      reservation_info = {
+        id: 1,
+        room_number: 3,
+        check_in: Date.new(2018,2,3),
+        check_out: Date.new(2018,2,5)
+      }
+      reservation = Hotel::Reservation.new(reservation_info)
+
+      @room.add_reservation(reservation)
+      @room.reservations.pop
+      @room.reservations.must_equal [reservation]
     end
   end # end of 'Initializer'
 
@@ -39,21 +48,30 @@ describe 'Room class' do
   # reservation is a valid Reservation.
   describe 'Add Reservation' do
     before do
-      @room = Hotel::Room.new(1)
+      @room = Hotel::Room.new(3)
     end
 
     it 'adds a new reservation to reservations' do
+      reservation_info = {
+        id: 1,
+        room_number: 3,
+        check_in: Date.new(2018,2,3),
+        check_out: Date.new(2018,2,5)
+      }
+      reservation = Hotel::Reservation.new(reservation_info)
 
+      @room.add_reservation(reservation)
+      @room.reservations.must_equal [reservation]
     end
 
     it 'throws error if the reservation is not a Reservation' do
-
+      proc { Hotel::Room.new(1).add_reservation("foo") }.must_raise ArgumentError
     end
 
     # it 'throws error if the reservation room is not \'this\'' do
     #   # TODO: what's up with this? IE, the circular logic
     # end
-    
+
   end # end of 'Add Reservation'
 
 end # end of 'Room'
