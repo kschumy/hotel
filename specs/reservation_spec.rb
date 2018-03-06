@@ -12,8 +12,8 @@ describe "Reservation class" do
       @reservation_info = {
         id: @initial_id,
         room_number: @initial_room_number,
-        check_in_date: @initial_check_in,
-        check_out_date: @initial_check_out
+        check_in: @initial_check_in,
+        check_out: @initial_check_out
       }
       @reservation = Hotel::Reservation.new(@reservation_info)
     end
@@ -35,70 +35,70 @@ describe "Reservation class" do
     end
 
     it "has a check-in date" do
-      @reservation.must_respond_to :check_in_date
-      @reservation.check_in_date.must_be_kind_of Date
-      @reservation.check_in_date.must_equal @initial_check_in
+      @reservation.must_respond_to :check_in
+      @reservation.check_in.must_be_kind_of Date
+      @reservation.check_in.must_equal @initial_check_in
     end
 
     it "has a check-out date" do
-      @reservation.must_respond_to :check_out_date
-      @reservation.check_out_date.must_be_kind_of Date
-      @reservation.check_out_date.must_equal @initial_check_out
+      @reservation.must_respond_to :check_out
+      @reservation.check_out.must_be_kind_of Date
+      @reservation.check_out.must_equal @initial_check_out
     end
 
     it "throws an error is id is not an Integer" do
       proc {
         @reservation_info[:id] = "Look at me. I am the id now."
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
       proc {
         @reservation_info[:id] = nil
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
     it "throws an error is id is less than 1" do
       proc {
         @reservation_info[:id] = 0
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
     it "throws an error is check-in is not a date" do
       proc {
-        @reservation_info[:check_in_date] = "I am not a check-in date."
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_in] = "I am not a check-in date."
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
       proc {
-        @reservation_info[:check_in_date] = nil
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_in] = nil
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
     it "throws an error is check-out is not a date" do
       proc {
-        @reservation_info[:check_out_date] = "I am not a check-out date."
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_out] = "I am not a check-out date."
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
       proc {
-        @reservation_info[:check_out_date] = nil
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_out] = nil
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
     it "throws an error if check-in is the same day as check-out" do
       proc {
-        @reservation_info[:check_in_date] = Date.new(2018,2,5)
-        @reservation_info[:check_out_date] = Date.new(2018,2,5)
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_in] = Date.new(2018,2,5)
+        @reservation_info[:check_out] = Date.new(2018,2,5)
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
     it "throws an error if check-in is after check-out" do
       proc {
-        @reservation_info[:check_in_date] = Date.new(2018,2,5)
-        @reservation_info[:check_out_date] = Date.new(2018,2,4)
-        new_reservation = Hotel::Reservation.new(@reservation_info)
+        @reservation_info[:check_in] = Date.new(2018,2,5)
+        @reservation_info[:check_out] = Date.new(2018,2,4)
+        Hotel::Reservation.new(@reservation_info)
       }.must_raise ArgumentError
     end
 
