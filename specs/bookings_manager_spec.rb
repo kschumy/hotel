@@ -17,12 +17,25 @@ describe 'BookingsManager class' do
         14, 15, 16, 17, 18, 19, 20]
     end
 
+    it 'does not return the original list of rooms' do
+      @manager.rooms.pop
+      @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+        14, 15, 16, 17, 18, 19, 20]
+    end
+
     it 'creates a empty list for reservations' do
       @manager.must_respond_to :reservations
       @manager.reservations.must_be_kind_of Array
       @manager.reservations.must_equal []
     end
-  end # end Initializer
+
+    it 'does not return the original list of reservations' do
+      new_room = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5))
+
+      @manager.reservations.pop
+      @manager.reservations.must_equal [new_room]
+    end
+  end # end of 'Initializer'
 
   describe 'Reserve Room' do
     before do
@@ -43,14 +56,23 @@ describe 'BookingsManager class' do
       @manager.reservations.last.must_equal reservation
       @manager.reservations.length.must_equal (num_of_reservations_before + 1)
     end
-  end # end Reserve Room
 
-  describe 'get_reservations_on_date' do
-    it 'returns an empty list if no reservations on that date' do
+    it 'sets the reservation numbers by incrementing by one' do
+      reservation = @manager.reserve_room(@initial_check_in, @initial_check_out)
+      reservation.id.must_equal 1
+      reservation2 = @manager.reserve_room(@initial_check_in, @initial_check_out)
+      reservation2.id.must_equal 2
+    end
+  end # end of 'Reserve Room'
+
+  describe 'Get Reservations On Date' do
+    it 'returns an empty list if no reservations on date' do
+      @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
       @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
     end
 
-    it 'returns an list of reservations on that date' do
+    it 'returns an list of reservations on date' do
       res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
       res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
       res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
@@ -76,6 +98,26 @@ describe 'BookingsManager class' do
     it "throws an ArgumentError for an invalid date" do
       proc { @manager.get_reservations_on_date("foo") }.must_raise ArgumentError
     end
-  end # end get_reservations_on_date
+  end # end of 'Get Reservations On Date'
 
-end # end BookingsManager
+  describe 'Get Reservation Cost' do
+    it 'the cost of a the reservation' do
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4))
+      @manager.get_reservation_cost(1).must_equal 200.0
+    end
+
+    it 'the cost of a the reservation' do
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4))
+      # cost = @manager.get_reservation_cost(1)
+      # cost *= 2
+      @manager.get_reservation_cost(1).must_equal 200.0
+    end
+
+    it 'the cost of a the reservation' do
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4))
+      proc { @manager.get_reservation_cost(2) }.must_raise ArgumentError
+      proc { @manager.get_reservation_cost("foo") }.must_raise ArgumentError
+    end
+  end # end of 'Get Reservation Cost'
+
+end # end of 'BookingsManager'
