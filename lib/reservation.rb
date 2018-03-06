@@ -14,6 +14,7 @@ module Hotel
       check_if_valid_dates
     end
 
+    # Returns the cost, rounded to two decimal places.
     def get_cost
       return (length_of_reservation * ROOM_RATE).round(2)
     end
