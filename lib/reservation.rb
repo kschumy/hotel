@@ -21,7 +21,7 @@ module Hotel
 
     def conflicts_with?(start_date, end_date)
       check_if_valid_dates(start_date, end_date)
-      return !(end_date < @check_in || start_date >= @check_out)
+      return !(end_date <= @check_in || start_date >= @check_out)
     end
 
     private
