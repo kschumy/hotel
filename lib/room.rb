@@ -22,9 +22,8 @@ module Hotel
       return @reservations.dup
     end
 
-    def is_available?(date)
-      # LEFT OFF HERE!!
-      # need to write test and method in reservation to check if reservation conflicts
+    def is_available?(start_date, end_date)
+      return !@reservations.any?{ |res| res.conflicts_with?(start_date, end_date) }
     end
 
     private
