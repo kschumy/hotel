@@ -124,6 +124,51 @@ describe 'BookingsManager class' do
     end
   end # end of 'Get Reservation Cost'
 
+  describe 'Get Available Room' do
+    # it 'returns an empty list if no rooms are available' do
+    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+    #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
+    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+    # end
+    #
+    # it 'returns an list of rooms available' do
+    #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
+    #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
+    #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
+    #
+    #   res_on_date.must_equal [res1, res2]
+    # end
+    #
+    # it 'only includes reservations that overlap with date' do
+    #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
+    #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
+    #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
+    #   @manager.reserve_room(Date.new(2018,2,6), Date.new(2018,2,7)) # after
+    #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
+    #
+    #   res_on_date.must_equal [res1, res2]
+    # end
+    #
+    # it 'does not include reservations that end on the date' do
+    #   @manager.reserve_room(Date.new(2018,2,2), Date.new(2018,2,5))
+    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+    # end
+
+    it "throws an ArgumentError for an invalid date" do
+      proc {
+        @manager.get_available_rooms("foo", Date.new(2018,2,5))
+      }.must_raise ArgumentError
+
+      proc {
+        @manager.get_available_rooms(Date.new(2018,2,5), "foo")
+      }.must_raise ArgumentError
+
+      proc {
+        @manager.get_available_rooms(Date.new(2018,2,5), Date.new(2018,2,4))
+      }.must_raise ArgumentError
+    end
+  end # end of 'Get Available Room'
+
 
   # describe 'Get Available On Dates' do
   #   it 'returns an empty list if no reservations on date range' do

@@ -14,9 +14,9 @@ describe "Hotel Module" do
 
   describe "check_if_valid_dates" do
     it 'returns nil if valid dates' do
-        start_date = Date.new(2018,2,1)
-        end_date = Date.new(2018,2,5)
-        Hotel.check_if_valid_dates(start_date, end_date)
+      start_date = Date.new(2018,2,1)
+      end_date = Date.new(2018,2,2)
+      Hotel.check_if_valid_dates(start_date, end_date)
     end
 
     it 'throws error if invalid date value' do
@@ -39,7 +39,9 @@ describe "Hotel Module" do
         end_date = Date.new(2018,2,1)
         Hotel.check_if_valid_dates(start_date, end_date)
       }.must_raise ArgumentError
+    end
 
+    it 'throws error if start date after end date' do
       proc {
         start_date = Date.new(2018,2,5)
         end_date = Date.new(2018,2,4)

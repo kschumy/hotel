@@ -101,19 +101,18 @@ describe 'Room class' do
 
     it 'returns true if end date is on another reservation start date' do
       @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,12)).must_equal true
-      # @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,12)).must_equal true
     end
 
-    it 'returns start and end overlap with start/end of two reservations' do
+    it 'returns true of starts/ends overlap with two reservations' do
       @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,12)).must_equal true
     end
 
-    it 'throws error if overlaps on non-start/end dates' do
+    it 'returns false if overlaps on non-start/end dates' do
       @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,13)).must_equal false
     end
 
-    it 'throws error if overlaps on non-start/end dates' do
-      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,13)).must_equal false
+    it 'returns false if overlaps on non-start/end dates' do
+      @room.is_available?(Date.new(2018,2,7), Date.new(2018,2,11)).must_equal false
     end
 
     # it 'throws error if the reservation is not a Reservation' do
