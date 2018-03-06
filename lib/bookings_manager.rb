@@ -1,10 +1,5 @@
-# require_relative 'driver'
-# require_relative 'passenger'
-# require_relative 'trip'
-
 # QUESTION: is it better to check if valid date immediately or wait until making
 # reservation?
-
 
 module Hotel
   # ROOM_RATE = 200.0
@@ -18,23 +13,30 @@ module Hotel
       @reservations = []
     end
 
-    def reserve_room(input_check_in_date, input_check_out_date)
+    def reserve_room(input_check_in, input_check_out)
       reservation_info = {
         id: rand(1..99),
         room_number: rand(1..20),
-        check_in_date: input_check_in_date,
-        check_out_date: input_check_out_date
+        check_in: input_check_in,
+        check_out: input_check_out
       }
       @reservations << Hotel::Reservation.new(reservation_info)
       return @reservations.last
     end
 
-    def has_reservation_on_date?(date)
+    def get_reservations_on_date(date)
+      Hotel.has_valid_date_or_error(date)
+      return @reservations.select { |reservation| reservation if
+        is_date_between_dates?(date, reservation) }
     end
 
     private
 
-    
+    def is_date_between_dates?(date, reservation)
+      return date >= reservation.check_in && date < reservation.check_out
+    end
+
+
 
   end
 end
