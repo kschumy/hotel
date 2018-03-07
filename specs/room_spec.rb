@@ -49,23 +49,31 @@ describe 'Room class' do
   describe 'Add Reservation' do
     before do
       @room = Hotel::Room.new(3)
-    end
-
-    it 'adds a new reservation to reservations' do
       reservation_info = {
         id: 1,
         room_number: 3,
         check_in: Date.new(2018,2,3),
         check_out: Date.new(2018,2,5)
       }
-      reservation = Hotel::Reservation.new(reservation_info)
+      @reservation = Hotel::Reservation.new(reservation_info)
 
-      @room.add_reservation(reservation)
-      @room.reservations.must_equal [reservation]
+      @room.add_reservation(@reservation)
+    end
+
+    it 'adds a new reservation to reservations' do
+      @room.reservations.must_equal [@reservation]
     end
 
     it 'throws error if the reservation is not a Reservation' do
-      proc { Hotel::Room.new(1).add_reservation("foo") }.must_raise ArgumentError
+      proc { @room.add_reservation("foo") }.must_raise ArgumentError
+    end
+
+    it 'throws error if not available for reservation' do
+      proc {
+        new_reservation = Hotel::Reservation.new(id: 14, room_number: 3,
+        check_in: Date.new(2018,2,1), check_out: Date.new(2018,2,5))
+        @room.add_reservation(new_reservation)
+      }.must_raise ArgumentError
     end
 
     # it 'throws error if the reservation room is not \'this\'' do

@@ -1,11 +1,13 @@
 require_relative 'spec_helper'
 
 describe 'BookingsManager class' do
-  before do
-    @manager = Hotel::BookingsManager.new
-  end
+
 
   describe 'Initializer' do
+    before do
+      @manager = Hotel::BookingsManager.new
+    end
+
     it 'is an instance of BookingsManager' do
       @manager.must_be_instance_of Hotel::BookingsManager
     end
@@ -43,6 +45,7 @@ describe 'BookingsManager class' do
 
   describe 'Reserve Room' do
     before do
+      @manager = Hotel::BookingsManager.new
       @initial_check_in = Date.new(2018,2,3)
       @initial_check_out = Date.new(2018,2,5)
     end
@@ -70,6 +73,9 @@ describe 'BookingsManager class' do
   end # end of 'Reserve Room'
 
   describe 'Get Reservations On Date' do
+    before do
+      @manager = Hotel::BookingsManager.new
+    end
     it 'returns an empty list if no reservations on date' do
       @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
       @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
@@ -105,6 +111,9 @@ describe 'BookingsManager class' do
   end # end of 'Get Reservations On Date'
 
   describe 'Get Reservation Cost' do
+    before do
+      @manager = Hotel::BookingsManager.new
+    end
     it 'the cost of a the reservation' do
       @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4))
       @manager.get_reservation_cost(1).must_equal 200.0
@@ -112,8 +121,6 @@ describe 'BookingsManager class' do
 
     it 'the cost of a the reservation' do
       @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4))
-      # cost = @manager.get_reservation_cost(1)
-      # cost *= 2
       @manager.get_reservation_cost(1).must_equal 200.0
     end
 
@@ -125,33 +132,48 @@ describe 'BookingsManager class' do
   end # end of 'Get Reservation Cost'
 
   describe 'Get Available Room' do
-    # it 'returns an empty list if no rooms are available' do
-    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
-    #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
-    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
-    # end
-    #
-    # it 'returns an list of rooms available' do
-    #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
-    #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
-    #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
-    #
-    #   res_on_date.must_equal [res1, res2]
-    # end
-    #
+
+    before do
+      @manager = Hotel::BookingsManager.new
+    end
+
+    it 'returns an empty list if no rooms are available' do
+      @manager.rooms.size.times do
+        @manager.reserve_room(Date.new(2018,2,1), Date.new(2018,2,8))
+      end
+      @manager.get_available_rooms(Date.new(2018,2,1), Date.new(2018,2,8)).must_equal []
+    end
+
+    it 'returns an list of rooms available' do
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,8))
+      @manager.reserve_room(Date.new(2018,2,2), Date.new(2018,2,8))
+      @manager.reserve_room(Date.new(2018,2,1), Date.new(2018,2,8))
+
+      available_rooms = @manager.get_available_rooms(Date.new(2018,2,5), Date.new(2018,2,6))
+      available_rooms.must_be_kind_of Array
+      available_rooms.size.must_equal 17
+    end
+
+    it 'does not include unavailable rooms ' do
+      reservation = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,8))
+      reservation.room_number
+      available_rooms = @manager.get_available_rooms(Date.new(2018,2,5), Date.new(2018,2,6))
+      (available_rooms.any? { |room| room.number == available_rooms}).must_equal false
+    end
+
     # it 'only includes reservations that overlap with date' do
     #   res1 = @manager.reserve_room(Date.new(2018,2,5), Date.new(2018,2,8))
     #   @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,4)) # before
     #   res2 = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,6))
     #   @manager.reserve_room(Date.new(2018,2,6), Date.new(2018,2,7)) # after
-    #   res_on_date = @manager.get_reservations_on_date(Date.new(2018,2,5))
+    #   res_on_date = @manager.get_available_rooms(Date.new(2018,2,5))
     #
     #   res_on_date.must_equal [res1, res2]
     # end
     #
     # it 'does not include reservations that end on the date' do
     #   @manager.reserve_room(Date.new(2018,2,2), Date.new(2018,2,5))
-    #   @manager.get_reservations_on_date(Date.new(2018,2,5)).must_equal []
+    #   @manager.get_available_rooms(Date.new(2018,2,5)).must_equal []
     # end
 
     it "throws an ArgumentError for an invalid date" do
