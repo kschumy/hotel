@@ -76,19 +76,11 @@ describe 'Room class' do
 
   describe 'Is Available?' do
     before do
-      # @res_one_info = {id: 21, room_number: 12,
-      #   check_in: Date.new(2018,2,3), check_out: Date.new(2018,2,8)}
-      # @res_two_info = {id: 83, room_number: 12,
-      #   check_in: Date.new(2018,2,12), check_out: Date.new(2018,2,17)}
       @room = Hotel::Room.new(3)
       @room.add_reservation(Hotel::Reservation.new({id: 21, room_number: 12,
         check_in: Date.new(2018,2,3), check_out: Date.new(2018,2,8)}))
       @room.add_reservation(Hotel::Reservation.new({id: 83, room_number: 12,
         check_in: Date.new(2018,2,12), check_out: Date.new(2018,2,17)}))
-
-      # @room = Hotel::Room.new(3)
-      # @room.add_reservation()
-      # @room.add_reservation(Hotel::Reservation.new(@res_two_info))
     end
 
     it 'returns true if is available in range' do
