@@ -15,6 +15,7 @@ module Hotel
 
     def add_reservation(reservation)
       has_reservation_or_error(reservation)
+      is_available_for_new_reservation(reservation)
       add_reservation_to_reservations(reservation)
     end
 
@@ -24,10 +25,14 @@ module Hotel
 
     def is_available?(start_date, end_date)
       Hotel.check_if_valid_dates(start_date, end_date)
-      return !@reservations.any?{ |res| res.conflicts_with?(start_date, end_date) }
+      return is_available_on_dates?(start_date, end_date)
     end
 
     private
+
+    def is_available_on_dates?(start_date, end_date)
+      return !@reservations.any?{ |res| res.conflicts_with?(start_date, end_date) }
+    end
 
     def check_initial_number
       if @number.class != Integer || !@number.between?(1, NUM_OF_ROOMS)
@@ -42,6 +47,13 @@ module Hotel
     def has_reservation_or_error(reservation)
       if reservation.class != Reservation
         raise ArgumentError.new("#{reservation} is not a Reservation.")
+      end
+    end
+
+    def is_available_for_new_reservation(reservation)
+      puts "hi"
+      if !is_available_on_dates?(reservation.check_in, reservation.check_out)
+        raise ArgumentError.new("Not available for #{reservation}.")
       end
     end
 

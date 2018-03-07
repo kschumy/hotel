@@ -30,7 +30,6 @@ module Hotel
       return end_date - start_date
     end
 
-
     # Returns the how long the reservation is in days.
     def check_if_valid_id
       if @id.class != Integer || @id < 1

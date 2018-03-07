@@ -2,9 +2,6 @@
 # reservation?
 
 module Hotel
-  # ROOM_RATE = 200.0
-  # NUM_OF_ROOMS = 20
-
   class BookingsManager
       # attr_reader :room, :reservations
 
@@ -27,7 +24,7 @@ module Hotel
 
 
     def get_available_rooms(start_date, end_date)
-      return @rooms.collect { |room| room.is_available?(start_date, end_date)}
+      return @rooms.select { |room| room if room.is_available?(start_date, end_date)}
     end
 
     #
@@ -57,12 +54,18 @@ module Hotel
     def book_a_new_reservation(input_check_in, input_check_out)
       reservation_info = {
         id: @reservations.length + 1,
-        room_number: rand(1..20),
+        room_number: find_available_room(input_check_in, input_check_out),
         check_in: input_check_in,
         check_out: input_check_out
       }
-      @reservations << Hotel::Reservation.new(reservation_info)
-      return @reservations.last
+      new_reservation = Hotel::Reservation.new(reservation_info)
+      add_reservation_to_room(new_reservation)
+      @reservations << new_reservation
+      return new_reservation
+    end
+
+    def add_reservation_to_room(new_reservation)
+      @rooms[new_reservation.room_number - 1].add_reservation(new_reservation)
     end
 
     # Provided date must be a valid Date.
@@ -78,6 +81,10 @@ module Hotel
     # Returns the reservation with the provided id.
     def find_reservation_by_id(id)
       return @reservations[id - 1]
+    end
+
+    def find_available_room(start_date, end_date)
+      return @rooms.find { |room| room if room.is_available?(start_date, end_date)}.number
     end
 
     # Provided date must be a valid Date.
