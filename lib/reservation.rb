@@ -39,29 +39,3 @@ module Hotel
 
   end
 end
-
-# conflict = end_date > @check_in && start_date < @check_out
-# conflict = false
-# puts "#{conflict}"
-# curr_date = start_date
-# while !conflict && curr_date < end_date
-#   print "#{curr_date}: "
-#   puts "#{conflict}"
-#   conflict = Hotel.is_between_dates?(curr_date, @check_in, @check_out)
-#   # conflict = curr_date.between?(@check_in, @check_out.prev_day)
-#   curr_date = curr_date.succ
-# end
-# return conflict
-# # return if end_date < @check_in || start_date >= @check_out
-# # conflict = end_date > @check_in && start_date < @check_out
-# conflict = false
-# puts "#{conflict}"
-# curr_date = start_date
-# while !conflict && curr_date < end_date
-#   print "#{curr_date}: "
-#   puts "#{conflict}"
-#   conflict = Hotel.is_between_dates?(curr_date, @check_in, @check_out)
-#   # conflict = curr_date.between?(@check_in, @check_out.prev_day)
-#   curr_date = curr_date.succ
-# end
-# return conflict

@@ -1,8 +1,8 @@
 # QUESTION: is it better to check if valid date immediately or wait until making
 # reservation?
 
-module Hotel
-  class BookingsManager
+module HotelSystem
+  class Admin
       # attr_reader :room, :reservations
 
     def initialize
