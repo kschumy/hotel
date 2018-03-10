@@ -1,12 +1,12 @@
 require_relative 'validate'
 
-module HotelSystem
+module Hotel
   @@all_resevations = []
   class Reservation
 
-    module Validate
+    include Validate
 
-      attr_reader :room, :check_in, :check_out
+    attr_reader :room, :check_in, :check_out
 
     def initialize(initial_info)
       @room = initial_info[:room]
