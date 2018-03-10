@@ -28,7 +28,7 @@ module HotelSystem
   #   - All of the availability checking logic from Wave 2 should now respect
   #   room blocks as well as individual reservations
 
-  class RoomsManager
+  class HotelManager
     ROOMS = [1..20]
 
     def initialize
