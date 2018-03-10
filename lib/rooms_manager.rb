@@ -1,5 +1,3 @@
-require_relative 'validate'
-# QUESTION: circular logic about checking if reservation.room is 'this'?
 
 module HotelSystem
   # # ROOM_RATE = 200.0
@@ -31,12 +29,10 @@ module HotelSystem
   #   room blocks as well as individual reservations
 
   class RoomsManager
-    include Validate
+    ROOMS = [1..20]
 
     def initialize
-      @rooms = {}
-      # @blocks = {}
-      create_rooms
+      @blocks = {}
     end
 
     def get_available_rooms(start_date, end_date)
@@ -58,7 +54,7 @@ module HotelSystem
 
     # Returns a list of room numbers.
     def rooms
-      return @rooms.dup
+      return ROOMS.dup
     end
 
     # Throws ArgumentError if input_check_in or input_check_out are not Dates.
@@ -83,12 +79,6 @@ module HotelSystem
         room if is_available_on_dates?(d, start_date, end_date)
       end
     end
-
-    def create_rooms
-      (1..NUM_OF_ROOMS).each { |num| @rooms[:num] = [] }
-    end
-
-
 
   end
 end

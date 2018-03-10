@@ -1,9 +1,9 @@
-# require_relative 'validate'
+require_relative 'validate'
 # QUESTION: circular logic about checking if reservation.room is 'this'?
 
 module Hotel
   class Room
-    # include Validate
+    include Validate
       attr_reader :number
 
     def initialize(initial_number)
@@ -26,7 +26,7 @@ module Hotel
 
     #
     def is_available?(start_date, end_date)
-      Hotel.check_if_valid_dates(start_date, end_date)
+      check_if_valid_dates(start_date, end_date)
       return is_available_on_dates?(start_date, end_date)
     end
 
