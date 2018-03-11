@@ -26,10 +26,10 @@ module Hotel
     #   end
     # end
     #
-    # def book_room
-    #   room = get_available_room(start_date, end_date)
-    #   room
-    # end
+    def book_room
+      room = get_available_room(start_date, end_date)
+      room
+    end
 
     # Returns a list of room numbers.
     def rooms

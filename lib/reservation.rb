@@ -1,8 +1,9 @@
 require_relative 'validate'
 
 module Hotel
-  @@all_resevations = []
+
   class Reservation
+    # @@all_resevations = []
 
     include Validate
 
