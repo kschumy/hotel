@@ -7,7 +7,7 @@ module Hotel
 
     RATE = 200.0
 
-    @@all_resevations = []
+    @@all = []
 
     attr_reader :room, :check_in, :check_out#, :cost
 
@@ -17,7 +17,7 @@ module Hotel
       @check_out = initial_info[:check_out]
       check_if_valid_dates(@check_in, @check_out)
       # @cost = get_cost(initial_info[:rate])
-      @@all_resevations << self
+      @@all << self
     end
 
     # Returns the cost, rounded to two decimal places.
@@ -27,9 +27,13 @@ module Hotel
       return (length_of_reservation(@check_in, @check_out) * RATE).round(2)
     end
 
-    def conflicts_with?(start_date, end_date)
-      check_if_valid_dates(start_date, end_date)
-      return !(end_date <= @check_in || start_date >= @check_out)
+    # def conflicts_with?(start_date, end_date)
+    #   check_if_valid_dates(start_date, end_date)
+    #   return !(end_date <= @check_in || start_date >= @check_out)
+    # end
+
+    def self.all_reservations
+      return @@all.dup
     end
 
     private

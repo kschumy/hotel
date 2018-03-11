@@ -27,8 +27,8 @@ module Hotel
     # end
     #
     def reserve_room(start_date, end_date)
-      room = get_available_room(start_date, end_date)
-      room
+      room_num = get_available_room(start_date, end_date)
+      reserve_room(room_num, start_date, end_date)
     end
 
     # Returns a list of room numbers.
@@ -53,15 +53,29 @@ module Hotel
 
     private
 
+    def is_available_on_dates?(room_res_dates, start_date, end_date)
+      return !room_res_dates.any? do |room_res_date|
+        !(end_date <= room_res_date[:check_in] || start_date >= room_res_date[:check_out])
+      end
+    end
+
+    def get_available_room(start_date, end_date)
+      return @rooms.find do |room_num, dates|
+        room_num if is_available_on_dates?(dates, start_date, end_date)
+      end
+    end
+
+    def reserve_room(room_num, start_date, end_date)
+
+    end
+
     def build_rooms
       (1..NUM_OF_ROOMS).each { |num| @rooms[num.to_s.to_sym] = [] }
     end
 
-    # def get_available_room(start_date, end_date)
-    #   return @rooms.find do |room_num, dates|
-    #     room if is_available_on_dates?(d, start_date, end_date)
-    #   end
-    # end
+    def burn_it_to_the_ground
+      exit
+    end
 
   end
 end
