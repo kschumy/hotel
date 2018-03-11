@@ -6,10 +6,10 @@ module Hotel
   class HotelManager
     include Validate
 
-    attr_reader :rooms
+    attr_reader #:rooms
 
     def initialize
-      @rooms = []
+      @rooms = {}
       # @blocks = {}
       build_rooms
     end
@@ -26,7 +26,7 @@ module Hotel
     #   end
     # end
     #
-    def book_room
+    def reserve_room(start_date, end_date)
       room = get_available_room(start_date, end_date)
       room
     end
@@ -54,7 +54,7 @@ module Hotel
     private
 
     def build_rooms
-      @rooms = (1..NUM_OF_ROOMS).map { |num| num }
+      (1..NUM_OF_ROOMS).each { |num| @rooms[num.to_s.to_sym] = [] }
     end
 
     # def get_available_room(start_date, end_date)

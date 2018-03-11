@@ -8,6 +8,7 @@ module Validate
     if date.class != Date
       raise ArgumentError.new("Invalid date #{date}.")
     end
+    # return date
   end
 
   # Throw ArgumentError is check_in_date or check_out_date are not Dates or if
