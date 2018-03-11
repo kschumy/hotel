@@ -28,11 +28,33 @@ describe 'HotelManager class' do
     end
 
     it 'preserves the original list of rooms' do
+      puts Hotel.all_resevations.inspect
       @manager.rooms.pop
       @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
         14, 15, 16, 17, 18, 19, 20]
     end
   end
+
+  describe 'Reserve Room' do
+    before do
+      @manager = Hotel::HotelManager.new
+    end
+
+    it 'reserves a room' do
+      @manager.must_respond_to :rooms
+      @manager.rooms.must_be_kind_of Array
+      @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+        14, 15, 16, 17, 18, 19, 20]
+      @manager.rooms.size.must_equal 20
+    end
+
+    # it 'preserves the original list of rooms' do
+    #   @manager.rooms.pop
+    #   @manager.rooms.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13,
+    #     14, 15, 16, 17, 18, 19, 20]
+    # end
+  end
+
   #
   #   it 'throws error if invalid id' do
   #     proc { Hotel::Room.new("foo") }.must_raise ArgumentError
