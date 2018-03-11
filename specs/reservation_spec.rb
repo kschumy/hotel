@@ -41,6 +41,7 @@ describe 'Reservation class' do
       @reservation.check_out.must_be_kind_of Date
       @reservation.check_out.must_equal @initial_check_out
     end
+
     #
     # it 'has a cost' do
     #   @reservation.must_respond_to :cost
@@ -194,3 +195,12 @@ describe 'Reservation class' do
 
 
 end # end of Reservation
+
+describe 'All Reservations' do
+  it 'can access all reservations' do
+    # Hotel::Reservation.must_respond_to :all_reservations
+    Hotel::Reservation.all_reservations.must_be_kind_of Array
+    # Hotel::Reservation.all_reservations.must_equal []
+    # Hotel::Reservation.all_reservations.size.must_equal 0
+  end
+end
