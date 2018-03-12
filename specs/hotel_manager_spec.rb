@@ -21,23 +21,22 @@ describe 'HotelManager class' do
     it 'returns a list of rooms' do
       @manager.must_respond_to :rooms
       @manager.rooms.must_be_kind_of Array
+      @manager.rooms.size.must_equal 20
+      (@manager.rooms.all? { |room| room.must_be_kind_of Hotel::Room
+        }).must_equal true
+    end
 
+    it 'assigns room number' do
+      room_num_list = @manager.rooms.collect { |room| room.number }
+      room_num_list.must_equal [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        15, 16, 17, 18, 19, 20]
+    end
+
+    it 'preserves the original list of rooms' do
+      @manager.rooms.pop
       @manager.rooms.size.must_equal 20
     end
 
-    # it 'preserves the original list of rooms' do
-    #   @manager.rooms.delete(:'1')
-    #   @manager.rooms.keys.must_equal [:'1', :'2', :'3', :'4', :'5', :'6', :'7',
-    #     :'8', :'9', :'10', :'11', :'12', :'13', :'14', :'15', :'16', :'17',
-    #     :'18', :'19', :'20']
-    # end
-    #
-    # it 'preserves the original list of rooms' do
-    #   @manager.rooms.delete(:'1')
-    #   @manager.rooms.keys.must_equal [:'1', :'2', :'3', :'4', :'5', :'6', :'7',
-    #     :'8', :'9', :'10', :'11', :'12', :'13', :'14', :'15', :'16', :'17',
-    #     :'18', :'19', :'20']
-    # end
   end
 
   describe 'Reserve Room' do
