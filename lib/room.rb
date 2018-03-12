@@ -13,7 +13,7 @@ module Hotel
 
     #
     def add_reservation(reservation)
-      has_reservation_or_error(reservation)
+      check_if_valid_range(reservation)
       is_available_for_new_reservation(reservation)
       add_reservation_to_reservations(reservation)
     end
@@ -25,31 +25,31 @@ module Hotel
 
     #
     def is_available?(date_range)
-      check_if_valid_dates(start_date, end_date)
-      return is_available_on_dates?(start_date, end_date)
+      check_if_valid_range(date_range)
+      return is_available_on_dates?(date_range)
     end
 
     private
 
     #
     def is_available_for_new_reservation(new_res)
-      if !is_available_on_dates?(new_res.check_in, new_res.check_out)
+      if !is_available_on_dates?(new_res)
         raise ArgumentError.new("Not available for #{new_res}.")
       end
     end
 
     #
-    def is_available_on_dates?(start_date, end_date)
-      return !@reservations.any?{ |res|
-        conflicts_with_dates?(start_date, end_date, res.check_in, res.check_out) }
+    def is_available_on_dates?(date_range)
+      return !@reservations.any? { |reservation|
+        conflicts_with_dates?(date_range, reservation) }
     end
 
-    #
-    def has_reservation_or_error(reservation)
-      if !reservation.respond_to?(:check_in) || !reservation.respond_to?(:check_out)
-        raise ArgumentError.new("#{reservation} must respond to conflicts_with?")
-      end
-    end
+    # #
+    # def has_reservation_or_error(reservation)
+    #   if !reservation.respond_to?(:check_in) || !reservation.respond_to?(:check_out)
+    #     raise ArgumentError.new("#{reservation} must respond to conflicts_with?")
+    #   end
+    # end
 
     #
     def add_reservation_to_reservations(reservation)

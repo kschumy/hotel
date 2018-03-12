@@ -1,8 +1,6 @@
 require_relative 'reservation_dates'
 
 module Hotel
-  STANDARD_RATE = 200.0
-
   class Reservation
 
     include ReservationDates

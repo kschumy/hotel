@@ -21,11 +21,11 @@ module Hotel
       end
     end
 
-    def is_available_on_dates?(check_in_outs, start_date, end_date)
-      return !check_ins_outs.any? do |check_in_out|
-        !(end_date <= check_in_out[:check_in] || start_date >= check_in_out[:check_out])
-      end
-    end
+    # def is_available_on_dates?(check_in_outs, start_date, end_date)
+    #   return !check_ins_outs.any? do |check_in_out|
+    #     !(end_date <= check_in_out[:check_in] || start_date >= check_in_out[:check_out])
+    #   end
+    # end
 
     def reserve_room(start_date, end_date)
       room_num = get_available_room(DateRange.new(start_date, end_date))
@@ -61,7 +61,7 @@ module Hotel
     # end
 
     def get_available_room(date_range)
-      return @rooms.find { |room| room if is_available_on_dates?(date_range) }
+      return @rooms.find { |room| room if room.is_available?(date_range) }
     end
     #
     # def reserve_room(room_num, start_date, end_date)
