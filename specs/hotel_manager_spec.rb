@@ -52,6 +52,14 @@ describe 'HotelManager class' do
       @manager.get_reservations.length.must_equal original_num_of_res + 1
     end
 
+    it 'reserves the first available room' do
+      first_room_res_before = @manager.rooms.first.reservations.last # should be nil
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5))
+      first_room_res_after =  @manager.rooms.first.reservations.last
+      reservation_lists_match = first_room_res_before == first_room_res_after
+      reservation_lists_match.must_equal false
+    end
+
   end
 
   describe 'Get Reservations' do
@@ -70,7 +78,35 @@ describe 'HotelManager class' do
 
   end
 
-  
+
+  describe 'Get Available Rooms' do
+
+    before do
+      @manager = Hotel::HotelManager.new
+    end
+
+    it 'gets a list of available rooms' do
+      @manager.must_respond_to :get_available_rooms
+      available_rooms =
+        @manager.get_available_rooms(Date.new(2018,2,3), Date.new(2018,2,5))
+      available_rooms.must_be_kind_of Array
+      available_rooms.must_equal @manager.rooms
+    end
+
+    it 'only gets rooms that are available' do
+      rooms_before = @manager.get_available_rooms(Date.new(2018,2,3),
+        Date.new(2018,2,5))
+      room = @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5))
+      rooms_after = @manager.get_available_rooms(Date.new(2018,2,3),
+        Date.new(2018,2,5))
+
+      rooms_after.size.must_equal rooms_before.size - 1
+    end
+
+  end
+
+
+
 
   #
   #   it 'has a reservations array' do
