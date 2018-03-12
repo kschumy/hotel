@@ -5,7 +5,7 @@ module Hotel
     include ReservationDates
       attr_reader :number, :rate
 
-    def initialize(initial_number, initial_rate)
+    def initialize(initial_number, initial_rate = 200.0)
       @number = initial_number
       @rate = initial_rate
       @reservations = []

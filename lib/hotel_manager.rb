@@ -9,9 +9,9 @@ module Hotel
     attr_reader #:rooms
 
     def initialize
-      @rooms = []
+      @rooms = build_rooms
       # @blocks = {}
-      build_rooms
+      # build_rooms
     end
 
     def get_available_rooms(start_date, end_date)
@@ -64,13 +64,15 @@ module Hotel
     #     room_num if is_available_on_dates?(dates, start_date, end_date)
     #   end
     # end
-    # 
+    #
     # def reserve_room(room_num, start_date, end_date)
     #
     # end
 
     def build_rooms
-      (1..NUM_OF_ROOMS).each { |num| @rooms.push() }
+      return Array.new(NUM_OF_ROOMS) { |num| Room.new(num + 1) }
+      # arr.map { |a| 2*a }
+      # (1..NUM_OF_ROOMS).each { |num| @rooms.push() }
     end
 
     def burn_it_to_the_ground
