@@ -14,7 +14,6 @@ module Hotel
       @room = initial_info[:room]
       @check_in = initial_info[:check_in]
       @check_out = initial_info[:check_out]
-      # check_if_valid_dates(@check_in, @check_out)
       @cost = get_cost(initial_info.fetch(:rate, 200.0))
       @@all_reservations << self
     end

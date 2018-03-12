@@ -36,7 +36,8 @@ module ReservationDates
   def conflicts_with_dates?(new_res, curr_res)
     check_if_valid_range(new_res)
     check_if_valid_range(curr_res)
-    return !(new_res.check_out <= curr_res.check_in || new_res.check_in >= curr_res.check_out)
+    return !(new_res.check_out <= curr_res.check_in ||
+      new_res.check_in >= curr_res.check_out)
   end
 
 end

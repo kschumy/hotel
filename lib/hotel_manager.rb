@@ -1,3 +1,4 @@
+# require_relative 'reservation'
 
 module Hotel
 
@@ -11,8 +12,7 @@ module Hotel
 
     def initialize
       @rooms = build_rooms
-      # @blocks = {}
-      # build_rooms
+      @reservations = Hotel::Reservation.get_all_reservations
     end
 
     def get_available_rooms(start_date, end_date)
@@ -27,9 +27,14 @@ module Hotel
     #   end
     # end
 
+    def get_reservations
+      return Hotel::Reservation.get_all_reservations
+    end
+
     def reserve_room(start_date, end_date)
-      room_num = get_available_room(DateRange.new(start_date, end_date))
-      reserve_room(room_num, start_date, end_date)
+      room = get_available_room(DateRange.new(start_date, end_date))
+      room.add_reservation(Reservation.new({room: room.number,
+        check_in: start_date, check_out: end_date}))
     end
 
     # Returns a list of room numbers.
