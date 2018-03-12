@@ -79,41 +79,50 @@ describe 'Room class' do
   end # end of 'Add Reservation'
 
   describe 'Is Available?' do
+
+    FakeRes = Struct.new(:check_in, :check_out)
+
     before do
+      fake_res_1 = FakeRes.new(Date.new(2018,2,3), Date.new(2018,2,8))
+      fake_res_2 = FakeRes.new(Date.new(2018,2,12), Date.new(2018,2,17))
       @room = Hotel::Room.new(3)
-      @room.add_reservation(Hotel::Reservation.new({room_number: 12,
-        check_in: Date.new(2018,2,3), check_out: Date.new(2018,2,8)}))
-      @room.add_reservation(Hotel::Reservation.new({room_number: 12,
-        check_in: Date.new(2018,2,12), check_out: Date.new(2018,2,17)}))
+      @room.add_reservation(fake_res_1)
+      @room.add_reservation(fake_res_2)
     end
 
     it 'returns true if is available in range' do
-      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,11)).must_equal true
+      new_valid_res = FakeRes.new(Date.new(2018,2,9), Date.new(2018,2,11))
+      @room.is_available?(new_valid_res).must_equal true
     end
 
     it 'returns true if available on another reservation end date' do
-      @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,11)).must_equal true
+      new_valid_res = FakeRes.new(Date.new(2018,2,8), Date.new(2018,2,11))
+      @room.is_available?(new_valid_res).must_equal true
     end
 
     it 'returns true if end date is on another reservation start date' do
-      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,12)).must_equal true
+      new_valid_res = FakeRes.new(Date.new(2018,2,9), Date.new(2018,2,12))
+      @room.is_available?(new_valid_res).must_equal true
     end
 
     it 'returns true of starts/ends overlap with two reservations' do
-      @room.is_available?(Date.new(2018,2,8), Date.new(2018,2,12)).must_equal true
+      new_bad_res = FakeRes.new(Date.new(2018,2,8), Date.new(2018,2,12))
+      @room.is_available?(new_bad_res).must_equal true
     end
 
     it 'returns false if overlaps on non-start/end dates' do
-      @room.is_available?(Date.new(2018,2,9), Date.new(2018,2,13)).must_equal false
+        new_bad_res = FakeRes.new(Date.new(2018,2,9), Date.new(2018,2,13))
+      @room.is_available?(new_bad_res).must_equal false
     end
 
     it 'returns false if overlaps on non-start/end dates' do
-      @room.is_available?(Date.new(2018,2,7), Date.new(2018,2,11)).must_equal false
+        new_bad_res = FakeRes.new(Date.new(2018,2,7), Date.new(2018,2,11))
+      @room.is_available?(new_bad_res).must_equal false
     end
 
     # it 'throws error if the reservation is not a Reservation' do
     #   proc {
-    #     @room.is_available?("foo", Date.new(2018,2,11))
+    #     @room.is_available?(FakeRes.new("foo", Date.new(2018,2,11))
     #   }.must_raise ArgumentError
     # end
   end # end of 'Is Available?'
