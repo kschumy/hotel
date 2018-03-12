@@ -44,24 +44,11 @@ module Hotel
         conflicts_with_dates?(date_range, reservation) }
     end
 
-    # #
-    # def has_reservation_or_error(reservation)
-    #   if !reservation.respond_to?(:check_in) || !reservation.respond_to?(:check_out)
-    #     raise ArgumentError.new("#{reservation} must respond to conflicts_with?")
-    #   end
-    # end
-
     #
     def add_reservation_to_reservations(reservation)
       @reservations << reservation
     end
 
-    # #
-    # def check_initial_number
-    #   if !number.is_a?(Integer) || !number.between?(1, NUM_OF_ROOMS)
-    #     raise ArgumentError.new("Invalid room number #{number}")
-    #   end
-    # end
 
   end
 end

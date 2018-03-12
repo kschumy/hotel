@@ -34,20 +34,5 @@ module Hotel
       return (length_of_reservation * rate).round(2)
     end
 
-    # def check_initial_rate(rate)
-    #   room_rate =
-    #   case rate
-    #   when :nil
-    #     STANDARD_RATE
-    #   when :block
-    #     STANDARD_RATE * 0.8
-    #   else
-    #     raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
-    #     rate
-    #   end
-    #   return room_rate
-    # end
-
-
   end
 end
