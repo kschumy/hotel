@@ -4,13 +4,13 @@ describe "ReservationDates" do
 
   include ReservationDates
 
-  describe "has_valid_date_or_error" do
+  describe "has_date_or_error" do
     it "returns nil if valid date" do
-      has_valid_date_or_error(Date.new(2018,2,5)).must_be_nil
+      has_date_or_error(Date.new(2018,2,5)).must_be_nil
     end
 
     it "throws an error for an invalid date" do
-      proc { has_valid_date_or_error("foo") }.must_raise ArgumentError
+      proc { has_date_or_error("foo") }.must_raise ArgumentError
     end
   end
 
@@ -51,9 +51,6 @@ describe "ReservationDates" do
       }.must_raise ArgumentError
     end
   end
-
-
-
 
   describe 'Conflicts With?' do
 

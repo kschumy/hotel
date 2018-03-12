@@ -54,6 +54,24 @@ describe 'HotelManager class' do
 
   end
 
+  describe 'Get Reservations' do
+    before do
+      @manager = Hotel::HotelManager.new
+    end
+
+    it 'gets a list of reservations' do
+      @manager.must_respond_to :get_reservations
+      @manager.get_reservations.must_be_kind_of Array
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5)) # not empty
+
+      (@manager.get_reservations.all? { |res| res.must_be_kind_of Hotel::Reservation
+        }).must_equal true
+    end
+
+  end
+
+  
+
   #
   #   it 'has a reservations array' do
   #     @manager.must_respond_to :reservations

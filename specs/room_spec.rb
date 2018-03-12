@@ -19,12 +19,6 @@ describe 'Room class' do
       @room.number.must_be_kind_of Integer
       @room.number.must_equal 1
     end
-    #
-    # it 'throws error if invalid id' do
-    #   proc { Hotel::Room.new("foo") }.must_raise ArgumentError
-    #   proc { Hotel::Room.new(21) }.must_raise ArgumentError
-    #   proc { Hotel::Room.new(0) }.must_raise ArgumentError
-    # end
 
     it 'has a reservations array' do
       @room.must_respond_to :reservations
@@ -34,8 +28,6 @@ describe 'Room class' do
 
   end # end of 'Initializer'
 
-  # 'add_reservation(reservation)' adds a reservation to reservations if the
-  # reservation is a valid Reservation.
   describe 'Add Reservation' do
     FakeRes = Struct.new(:check_in, :check_out)
 
