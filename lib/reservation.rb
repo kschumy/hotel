@@ -29,8 +29,6 @@ module Hotel
     def get_cost(rate)
       raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
       length_of_reservation = get_reservation_duration(@check_in, @check_out)
-      puts length_of_reservation
-      puts rate
       return (length_of_reservation * rate).round(2)
     end
 

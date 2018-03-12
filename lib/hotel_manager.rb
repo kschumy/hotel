@@ -10,13 +10,12 @@ module Hotel
 
     def initialize
       @rooms = build_rooms
-      @reservations = Hotel::Reservation.get_all_reservations
+      # @reservations = Hotel::Reservation.get_all_reservations
     end
 
     def get_available_rooms(start_date, end_date)
-      return @rooms.select do |room|
-        room if is_available_on_dates?(@rooms[room], start_date, end_date)
-      end
+      date_range = get_date_range(start_date, end_date)
+      return @rooms.select { |room| room if room.is_available?(date_range) }
     end
 
     def get_reservations
@@ -25,7 +24,7 @@ module Hotel
 
     def get_reservations_on_date(date)
       one_day_range = get_date_range(date)
-      return reservations.select { |res| conflicts_with_dates?(res, one_day_range) }
+      return reservations.select { |res| res if conflicts_with_dates?(res, one_day_range) }
     end
 
     def reserve_room(start_date, end_date)
