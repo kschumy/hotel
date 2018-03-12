@@ -46,6 +46,10 @@ describe 'HotelManager class' do
 
     it 'reserves a room' do
       @manager.must_respond_to :reserve_room
+
+      original_num_of_res = @manager.get_reservations.length
+      @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5))
+      @manager.get_reservations.length.must_equal original_num_of_res + 1
     end
 
   end
