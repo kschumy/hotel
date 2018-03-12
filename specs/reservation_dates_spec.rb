@@ -1,7 +1,7 @@
 require_relative 'spec_helper'
 
-describe "Validate" do
-  include Validate
+describe "ReservationDates" do
+  include ReservationDates
 
   describe "has_valid_date_or_error" do
     it "returns nil if valid date" do
