@@ -48,12 +48,12 @@ describe 'Reservation class' do
       @reservation.check_out.must_equal @initial_check_out
     end
 
-    #
-    # it 'has a cost' do
-    #   @reservation.must_respond_to :cost
-    #   @reservation.cost.must_be_kind_of Float
-    #   @reservation.cost.must_equal @cost
-    # end
+
+    it 'has a cost' do
+      @reservation.must_respond_to :cost
+      @reservation.cost.must_be_kind_of Float
+      @reservation.cost.must_equal @cost
+    end
 
     it 'throws an error is check-in is not a date' do
       proc {
@@ -94,24 +94,24 @@ describe 'Reservation class' do
     end
   end # end of Initializer
 
-  describe 'Get Cost' do
-    before do
-      @initial_room_number = 1
-      @initial_check_in = Date.new(2018,2,3)
-      @initial_check_out = Date.new(2018,2,5)
-
-      @reservation_info = {
-        room: @initial_room_number,
-        check_in: @initial_check_in,
-        check_out: @initial_check_out
-      }
-      @reservation = Hotel::Reservation.new(@reservation_info)
-    end
-
-    it 'returns the cost' do
-      @reservation.get_cost.must_equal 200.0 * 2
-    end
-  end # end of 'Get Cost'
+  # describe 'Get Cost' do
+  #   before do
+  #     @initial_room_number = 1
+  #     @initial_check_in = Date.new(2018,2,3)
+  #     @initial_check_out = Date.new(2018,2,5)
+  #
+  #     @reservation_info = {
+  #       room: @initial_room_number,
+  #       check_in: @initial_check_in,
+  #       check_out: @initial_check_out
+  #     }
+  #     @reservation = Hotel::Reservation.new(@reservation_info)
+  #   end
+  #
+  #   it 'returns the cost' do
+  #     @reservation.get_cost.must_equal 200.0 * 2
+  #   end
+  # end # end of 'Get Cost'
 
 
   # describe 'Conflicts With?' do

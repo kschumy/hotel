@@ -48,19 +48,8 @@ describe 'HotelManager class' do
       @manager.must_respond_to :reserve_room
     end
 
-    # it 'preserves the original list of rooms' do
-    #   @manager.rooms.pop
-    #   @manager.rooms.must_equal [1 2 3 4 5 6 7 8 9 10 11 12 13
-    #     14 15 16 17 18 19 20]
-    # end
   end
 
-  #
-  #   it 'throws error if invalid id' do
-  #     proc { Hotel::Room.new("foo") }.must_raise ArgumentError
-  #     proc { Hotel::Room.new(21) }.must_raise ArgumentError
-  #     proc { Hotel::Room.new(0) }.must_raise ArgumentError
-  #   end
   #
   #   it 'has a reservations array' do
   #     @manager.must_respond_to :reservations
