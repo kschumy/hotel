@@ -1,37 +1,26 @@
 require_relative 'reservation_dates'
 
 module Hotel
+  STANDARD_RATE = 200.0
 
   class Reservation
-    include ReservationDates
 
-    RATE = 200.0
+    include ReservationDates
 
     @@all_reservations = []
 
-    attr_reader :id, :room, :check_in, :check_out#, :cost
+    attr_reader :id, :room, :check_in, :check_out, :cost
 
     def initialize(initial_info)
       @id = @@all_reservations.size + 1
       @room = initial_info[:room]
       @check_in = initial_info[:check_in]
       @check_out = initial_info[:check_out]
-      check_if_valid_dates(@check_in, @check_out)
-      # @cost = get_cost(initial_info[:rate])
+      # check_if_valid_dates(@check_in, @check_out)
+      @cost = get_cost(initial_info.fetch(:rate, 200.0))
       @@all_reservations << self
     end
 
-    # Returns the cost, rounded to two decimal places.
-    def get_cost
-      # check_if_valid_dates(@check_in, @check_out)
-      # raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
-      return (length_of_reservation(@check_in, @check_out) * RATE).round(2)
-    end
-
-    # def conflicts_with?(start_date, end_date)
-    #   check_if_valid_dates(start_date, end_date)
-    #   return !(end_date <= @check_in || start_date >= @check_out)
-    # end
 
     def self.get_all_reservations
       return @@all_reservations.dup
@@ -39,10 +28,29 @@ module Hotel
 
     private
 
-    # Returns the how long the reservation is in days.
-    def length_of_reservation(start_date, end_date)
-      return end_date - start_date
+    # Returns the cost, rounded to two decimal places.
+    def get_cost(rate)
+      raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
+      length_of_reservation = get_reservation_duration(@check_in, @check_out)
+      puts length_of_reservation
+      puts rate
+      return (length_of_reservation * rate).round(2)
     end
+
+    # def check_initial_rate(rate)
+    #   room_rate =
+    #   case rate
+    #   when :nil
+    #     STANDARD_RATE
+    #   when :block
+    #     STANDARD_RATE * 0.8
+    #   else
+    #     raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
+    #     rate
+    #   end
+    #   return room_rate
+    # end
+
 
   end
 end

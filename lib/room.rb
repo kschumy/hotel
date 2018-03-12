@@ -24,7 +24,7 @@ module Hotel
     end
 
     #
-    def is_available?(start_date, end_date)
+    def is_available?(date_range)
       check_if_valid_dates(start_date, end_date)
       return is_available_on_dates?(start_date, end_date)
     end
@@ -40,12 +40,13 @@ module Hotel
 
     #
     def is_available_on_dates?(start_date, end_date)
-      return !@reservations.any?{ |res| res.conflicts_with?(start_date, end_date) }
+      return !@reservations.any?{ |res|
+        conflicts_with_dates?(start_date, end_date, res.check_in, res.check_out) }
     end
 
     #
     def has_reservation_or_error(reservation)
-      if !reservation.respond_to?(:conflicts_with?)
+      if !reservation.respond_to?(:check_in) || !reservation.respond_to?(:check_out)
         raise ArgumentError.new("#{reservation} must respond to conflicts_with?")
       end
     end
@@ -55,12 +56,12 @@ module Hotel
       @reservations << reservation
     end
 
-    #
-    def check_initial_number
-      if !number.is_a?(Integer) || !number.between?(1, NUM_OF_ROOMS)
-        raise ArgumentError.new("Invalid room number #{number}")
-      end
-    end
+    # #
+    # def check_initial_number
+    #   if !number.is_a?(Integer) || !number.between?(1, NUM_OF_ROOMS)
+    #     raise ArgumentError.new("Invalid room number #{number}")
+    #   end
+    # end
 
   end
 end
