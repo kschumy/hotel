@@ -1,23 +1,24 @@
-require_relative 'validate'
+require_relative 'reservation_dates'
 
 module Hotel
 
   class Reservation
-    include Validate
+    include ReservationDates
 
     RATE = 200.0
 
-    @@all = []
+    @@all_reservations = []
 
-    attr_reader :room, :check_in, :check_out#, :cost
+    attr_reader :id, :room, :check_in, :check_out#, :cost
 
     def initialize(initial_info)
+      @id = @@all_reservations.size + 1
       @room = initial_info[:room]
       @check_in = initial_info[:check_in]
       @check_out = initial_info[:check_out]
       check_if_valid_dates(@check_in, @check_out)
       # @cost = get_cost(initial_info[:rate])
-      @@all << self
+      @@all_reservations << self
     end
 
     # Returns the cost, rounded to two decimal places.
@@ -32,8 +33,8 @@ module Hotel
     #   return !(end_date <= @check_in || start_date >= @check_out)
     # end
 
-    def self.all_reservations
-      return @@all.dup
+    def self.get_all_reservations
+      return @@all_reservations.dup
     end
 
     private

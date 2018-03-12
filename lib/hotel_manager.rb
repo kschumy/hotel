@@ -4,28 +4,28 @@ module Hotel
   NUM_OF_ROOMS = 20
 
   class HotelManager
-    include Validate
+    include ReservationDates
 
     attr_reader #:rooms
 
     def initialize
-      @rooms = {}
+      @rooms = []
       # @blocks = {}
       build_rooms
     end
 
-    # def get_available_rooms(start_date, end_date)
-    #   return @rooms.select do |room|
-    #     room if is_available_on_dates?(@rooms[room], start_date, end_date)
-    #   end
-    # end
-    #
-    # def is_available_on_dates?(check_in_outs, start_date, end_date)
-    #   return !check_ins_outs.any? do |check_in_out|
-    #     !(end_date <= check_in_out[:check_in] || start_date >= check_in_out[:check_out])
-    #   end
-    # end
-    #
+    def get_available_rooms(start_date, end_date)
+      return @rooms.select do |room|
+        room if is_available_on_dates?(@rooms[room], start_date, end_date)
+      end
+    end
+
+    def is_available_on_dates?(check_in_outs, start_date, end_date)
+      return !check_ins_outs.any? do |check_in_out|
+        !(end_date <= check_in_out[:check_in] || start_date >= check_in_out[:check_out])
+      end
+    end
+
     def reserve_room(start_date, end_date)
       room_num = get_available_room(start_date, end_date)
       reserve_room(room_num, start_date, end_date)
@@ -53,24 +53,24 @@ module Hotel
 
     private
 
-    def is_available_on_dates?(room_res_dates, start_date, end_date)
-      return !room_res_dates.any? do |room_res_date|
-        !(end_date <= room_res_date[:check_in] || start_date >= room_res_date[:check_out])
-      end
-    end
+    # def is_available_on_dates?(room_res_dates, start_date, end_date)
+    #   return !room_res_dates.any? do |room_res_date|
+    #     !(end_date <= room_res_date[:check_in] || start_date >= room_res_date[:check_out])
+    #   end
+    # end
 
-    def get_available_room(start_date, end_date)
-      return @rooms.find do |room_num, dates|
-        room_num if is_available_on_dates?(dates, start_date, end_date)
-      end
-    end
-
-    def reserve_room(room_num, start_date, end_date)
-
-    end
+    # def get_available_room(start_date, end_date)
+    #   return @rooms.find do |room_num, dates|
+    #     room_num if is_available_on_dates?(dates, start_date, end_date)
+    #   end
+    # end
+    # 
+    # def reserve_room(room_num, start_date, end_date)
+    #
+    # end
 
     def build_rooms
-      (1..NUM_OF_ROOMS).each { |num| @rooms[num.to_s.to_sym] = [] }
+      (1..NUM_OF_ROOMS).each { |num| @rooms.push() }
     end
 
     def burn_it_to_the_ground

@@ -22,4 +22,14 @@ module ReservationDates
     end
   end
 
+  #
+  def conflicts_with_dates?(start_1, end_1, start_2, end_2)
+    check_if_valid_dates(start_1, end_1)
+    check_if_valid_dates(start_2, end_2)
+    return !(end_date <= @check_in || start_date >= @check_out)
+  end
+
+  
+
+
 end
