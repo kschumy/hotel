@@ -1,36 +1,31 @@
 require_relative 'reservation_dates'
-require_relative 'reservable'
-
 
 module Hotel
   class Reservation
 
-    include ReservationDates
-    include Reservable
+    include DatesRangeModule
 
     attr_reader :id, :room, :check_in, :check_out, :cost
 
-    def initialize(initial_info)
+    def initialize(res_info)
+      @check_in = res_info[:check_in]
+      @check_out= res_info[:check_out]
       # @id = @@all_reservations.size + 1
-      @room = initial_info[:room]
-      @check_in = initial_info[:check_in]
-      @check_out = initial_info[:check_out]
-      @cost = get_cost(initial_info.fetch(:rate, 200.0))
+      @room = res_info[:room]
+      @cost = get_cost(res_info.fetch(:rate, 200.0))
       # @@all_reservations << self
     end
 
-
-    # def self.get_reservations_on_range
-    #   return get_all_reservations.select { |res| res if conflicts_with_dates?(res, range) }
-    # end
-
     private
+    #
+    # def check_initial_room(initial_room)
+    #   if initial_room.is_a?(Integer)
+    # end
 
     # Returns the cost, rounded to two decimal places.
     def get_cost(rate)
       raise ArgumentError.new("Invalid rate") if !rate.is_a?(Float) || rate < 0.0
-      length_of_reservation = get_reservation_duration(@check_in, @check_out)
-      return (length_of_reservation * rate).round(2)
+      return (get_duration * rate).round(2)
     end
 
   end
