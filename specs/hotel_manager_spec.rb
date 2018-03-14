@@ -73,10 +73,8 @@ describe 'HotelManager class' do
       @manager.must_respond_to :get_reservations
       @manager.get_reservations.must_be_kind_of Array
       @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5)) # not empty
-      (@manager.get_reservations.all? { |res| res.must_respond_to :check_in
-        }).must_equal true
-      (@manager.get_reservations.all? { |res| res.must_respond_to :check_out
-        }).must_equal true
+      @manager.get_reservations.each { |res| res.must_respond_to :check_in }
+      @manager.get_reservations.each { |res| res.must_respond_to :check_out }
       # (@manager.get_reservations.all? { |res| res.must_be_kind_of Hotel::Reservation
       #   }).must_equal true
     end
