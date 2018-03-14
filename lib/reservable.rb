@@ -14,10 +14,10 @@ module Reservable
     return get_reservations_in_range(check_in: date)
   end
 
-  def reserve_a_room(check_in, check_out, res_id)
-    room_num = get_available_rooms(check_in, check_out).first
-    return {room: room_num, check_in: check_in, check_out: check_out}
-  end
+  # def reserve_a_room(check_in, check_out)
+  #   room_num = get_available_rooms(check_in, check_out).first
+  #   return {room: room_num, check_in: check_in, check_out: check_out}
+  # end
 
 
 

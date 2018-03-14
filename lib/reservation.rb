@@ -8,9 +8,7 @@ module Hotel
     include ReservationDates
     include Reservable
 
-    # @@all_reservations = []
-
-    attr_reader :id, :room, :check_in, :check_out, :cost #:id,
+    attr_reader :id, :room, :check_in, :check_out, :cost
 
     def initialize(initial_info)
       # @id = @@all_reservations.size + 1
@@ -21,10 +19,6 @@ module Hotel
       # @@all_reservations << self
     end
 
-
-    # def self.get_all_reservations
-    #   return @@all_reservations.dup
-    # end
 
     # def self.get_reservations_on_range
     #   return get_all_reservations.select { |res| res if conflicts_with_dates?(res, range) }

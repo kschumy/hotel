@@ -3,12 +3,10 @@ require_relative 'reservable'
 
 
 module Hotel
-  class Block < HotelManager
+  class Block < Reservation
 
     include ReservationDates
     include Reservable
-
-    # @@all_block_reservations = []
 
     attr_reader :id, :room, :check_in, :check_out, :cost #:id,
 
@@ -18,7 +16,7 @@ module Hotel
       # @check_in = initial_info[:check_in]
       # @check_out = initial_info[:check_out]
       # @cost = get_cost(initial_info.fetch(:rate, 200.0))
-      # @@all_reservations << self
+
     end
 
 

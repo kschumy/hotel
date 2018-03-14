@@ -2,15 +2,15 @@
 
 module Hotel
 
-  NUM_OF_ROOMS = 20
-  ROOMS = (1..NUM_OF_ROOMS).map { |num| num }
-  RATE = 200.0
-
   class HotelManager
     include ReservationDates
     include Reservable
 
-    def initialize
+    NUM_OF_ROOMS = 20
+    ROOMS = (1..NUM_OF_ROOMS).to_a
+    RATE = 200.0
+
+    def initialize()
       @reservations = []
       @blocks = []
     end
@@ -35,9 +35,10 @@ module Hotel
         check_in: check_in, check_out: check_out})
     end
 
-    def reserve_room(check_in, check_out)
-      @reservations << reserve_a_room(check_in, check_out)
-    end
+    # def reserve_room(check_in, check_out)
+    #   res = reserve_a_room(check_in, check_out)
+    #   @reservations << res.store(:id, @reservations.length)
+    # end
 
     def get_rooms
       return ROOMS.dup
@@ -47,7 +48,6 @@ module Hotel
 
     def get_reservations_in_range(check_in:, check_out:)
       range = get_date_range(check_in: check_in, check_out: check_out)
-      puts range.inspect
       return get_reservations.select { |res| res if conflicts_with_dates?(res, range) }
     end
 
