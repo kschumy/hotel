@@ -9,7 +9,7 @@ module Hotel
     BLOCK_RATE = RATE * 0.8
     MAX_BLOCK_SIZE = 5
 
-    @@all_blocks = []
+    # @@all_blocks = []
 
     attr_reader :id, :check_in, :check_out
 
@@ -20,7 +20,7 @@ module Hotel
       @reservations = []
       # check_if_valid_dates(initial_info[:check_in], initial_info[:check_out])
       build_initial_empty_reservations(initial_info.fetch(:rooms))
-      @@all_blocks << self
+      # @@all_blocks << self
     end
 
     def get_rooms
@@ -32,9 +32,9 @@ module Hotel
       return get_all_blocks.select { |block| block.id }
     end
 
-    def self.get_all_blocks
-      return @@all_blocks.dup
-    end
+    # def self.get_all_blocks
+    #   return @@all_blocks.dup
+    # end
 
     def reserve_room
       # raise ArgumentError.new("invalid dates") if !has_same_range?(other)
@@ -46,7 +46,7 @@ module Hotel
 
     def build_initial_empty_reservations(rooms)
       check_rooms(rooms)
-      check_if_double_booked(rooms)
+      # check_if_double_booked(rooms)
       # puts rooms.inspect
       # HeldRoom = Struct.new(:room, check_in: @check_in, check_out:@check_out)
       rooms.each { |room| @reservations << Reservation.new(check_in: @check_in,
@@ -65,12 +65,12 @@ module Hotel
       return rooms
     end
 
-    def check_if_double_booked(new_rooms)
-      @@blocks.each do |block|
-        raise ArgumentError.new if self.conflicts_with?(block) ||
-          block.get_rooms { |room| new_rooms.include?(room) }
-      end
-    end
+    # def check_if_double_booked(new_rooms)
+    #   @@all_blocks.each do |block|
+    #     raise ArgumentError.new if self.conflicts_with_other?(block) ||
+    #       block.get_rooms { |room| new_rooms.include?(room) }
+    #   end
+    # end
 
   end
 end

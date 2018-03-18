@@ -9,7 +9,7 @@ module DatesRangeModule
   # Throws StandardError if other does not respond do check_in and check_out, or
   # if the values from those calls do not produce a valid date range.
   def conflicts_with_other?(other)
-     return conflicts_with_dates?(other.check_in, other.check_out)
+     return conflicts_with?(check_in: other.check_in, check_out: other.check_out)
   end
 
   def conflicts_with?(check_in:, check_out: nil)
