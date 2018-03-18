@@ -2,21 +2,23 @@ require_relative 'reservation_dates'
 require_relative 'reservable'
 
 module Hotel
-  class Block < Reservation
+  class Block
     include DatesRangeModule
     include Reservable
 
     BLOCK_RATE = RATE * 0.8
+    MAX_BLOCK_SIZE = 5
 
     @@all_blocks = []
 
     attr_reader :id, :check_in, :check_out
 
     def initialize(initial_info)
-      @id = initial_info[:id] || ArgumentError.new
-      @rooms = initial_info[:rooms].to_set
+      @id = @@all_blocks.size + 1
+      @rooms = check_rooms(initial_info.fetch(:rooms))
       @check_in = initial_info[:check_in]
       @check_out = initial_info[:check_out]
+
       check_if_valid_dates(initial_info[:check_in], initial_info[:check_out])
       @@all_blocks << self
     end
@@ -26,7 +28,11 @@ module Hotel
     end
 
     def self.get_block(block_id)
-      return @@all_blocks.select { |block| block.id }
+      return get_all_blocks.select { |block| block.id }
+    end
+
+    def self.get_all_blocks
+      return @@all_blocks.dup
     end
 
     def reserve_room_in_block(check_in, check_out)
@@ -36,6 +42,13 @@ module Hotel
 
 
     private
+
+    def check_rooms(initial_rooms)
+      if !initial_rooms.size.between?(1,5) || initial_rooms.any?(nil)
+        raise ArgumentError.new(i"nvalid initial rooms")
+      end
+      return initial_rooms.to_set
+    end
 
     def check_if_double_booked
       @@blocks.each do |block|

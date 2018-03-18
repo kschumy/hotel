@@ -22,7 +22,7 @@ module DatesRangeModule
   end
 
   def has_same_dates?(check_in:, check_out: nil)
-    check_if_valid_range(other)
+    # check_if_valid_range(other)
     return self.check_in == other.check_in && self.check_out == other.check_out
   end
 

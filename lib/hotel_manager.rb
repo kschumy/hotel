@@ -26,14 +26,13 @@ module Hotel
     end
 
     def get_reservations_in_date_range(check_in, check_out)
-      puts check_in >= check_out
       return find_reservations_in_range(check_in: check_in, check_out: check_out)
     end
 
     def get_cost(reservation_id)
 
     end
-    
+
     private
 
     def reserve_room_with_info(reservation_info)
