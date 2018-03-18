@@ -10,7 +10,7 @@ module Hotel
     ROOMS = (1..20).to_a
 
     def initialize()
-      @reservations = []
+      @reservations = rooms
     end
 
     def get_reservations
@@ -22,9 +22,6 @@ module Hotel
         check_out: check_out)
       return get_rooms - reservations_in_range.collect { |res| res.room }
     end
-
-    
-
 
     def get_rooms(block_id = nil)
       return block_id.nil? ? ROOMS.dup : get_block_rooms(block_id)
