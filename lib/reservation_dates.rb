@@ -7,15 +7,15 @@ module DatesRangeModule
   end
 
   #
-  def conflicts_with?(date_range_or_check_in:, check_out: nil)
-    date_range_or_check_in = DateRange.new(date_range_or_check_in, check_out)
-    check_if_valid_range(other)
-    return !(other.check_out <= self.check_in || other.check_in >= self.check_out)
+  def conflicts_with?(check_in:, check_out: nil)
+    other_dates = DateRange.new(check_in, check_out)
+    check_if_valid_range(other_dates)
+    return !(other_dates.check_out <= self.check_in || other_dates.check_in >= self.check_out)
   end
 
   def has_same_date_range?(other)
     check_if_valid_range(other)
-    return self == other
+    return self.check_in == other.check_in && self.check_out == other.check_out
   end
 
   # Throw ArgumentError is check_in_date or check_out_date are not Dates or if

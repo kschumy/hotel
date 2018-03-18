@@ -31,7 +31,7 @@ module Hotel
     private
 
      def get_block_rooms(id)
-       return Hotel::Blocks.get_block(id) or raise ArgumentError("Invalid ID")
+      Hotel::Blocks.get_block(id) or raise ArgumentError("Invalid ID")
      end
 
 

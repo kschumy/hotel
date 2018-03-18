@@ -5,15 +5,19 @@ module Reservable
   end
 
   def get_available_rooms(check_in, check_out)
-    res_in_range = get_reservations_in_range(check_in: check_in,
+    reservations_in_range = get_reservations_in_range(check_in: check_in,
       check_out: check_out)
-    return get_rooms - res_in_range.collect { |res| res.room }
+    return get_rooms - reservations_in_range.collect { |res| res.room }
   end
 
   def get_new_reservation_info(check_in, check_out)
     room_num = get_available_rooms(check_in, check_out).first
     return {room: room_num, check_in: check_in, check_out: check_out}
   end
+
+  # def conflicts_with?(other)
+  #  return !(other.check_out <= @check_in || other.check_in >= @check_out)
+  # end
 
   private
 
