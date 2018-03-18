@@ -93,6 +93,16 @@
 #       }.must_raise ArgumentError
 #     end
 #   end # end of Initializer
+
+# 
+# it 'has an room rate' do
+#   test_info = {rooms: Set[1, 2], check_in: Date.new(2017,1,9),
+#     check_out: Date.new(2017,1,11)}
+#   manager = Hotel::Block.new(test_info)
+#
+#   Hotel::Block.BLOCK_RATE.must_equal 160.0
+# end
+
 #
 #   # describe 'Get Cost' do
 #   #   before do
