@@ -8,10 +8,10 @@ module Hotel
     attr_reader :id, :room, :check_in, :check_out, :cost
 
     def initialize(res_info)
-      @check_in = res_info[:check_in]
-      @check_out= res_info[:check_out]
+      @check_in , @check_out = check_if_valid_dates(res_info[:check_in], res_info[:check_out])
+      # @check_out = res_info[:check_out]
       @room = res_info[:room]
-      @cost = get_cost(res_info.fetch(:rate, 200.0))
+      @cost = get_cost(res_info.fetch(:rate, RATE))
     end
 
     private
