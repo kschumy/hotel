@@ -1,7 +1,16 @@
-# require_relative 'spec_helper'
-#
-# describe 'Block class' do
-#
+
+
+
+
+
+require_relative 'spec_helper'
+
+describe 'Block class' do
+  
+
+
+end
+
 #   describe 'Initializer' do
 #     before do
 #       @initial_room_number = [1, 2, 3, 4]
