@@ -8,10 +8,23 @@ module Hotel
     attr_reader :id, :room, :check_in, :check_out, :cost
 
     def initialize(res_info)
-      @check_in , @check_out = check_if_valid_dates(res_info[:check_in], res_info[:check_out])
+      @id = res_info[:id]
+      @check_in , @check_out = check_if_valid_dates(res_info[:check_in],
+        res_info[:check_out])
       # @check_out = res_info[:check_out]
       @room = res_info[:room]
       @cost = get_cost(res_info.fetch(:rate, RATE))
+    end
+
+    def is_held?
+      return @id.nil?
+    end
+
+    def assign_reservation(new_id)
+      if !is_held?
+        raise ArgumentError.new("Cannot assign already assigned reservation")
+      end
+      @id = new_id
     end
 
     private

@@ -20,8 +20,9 @@ module Reservable
   end
 
   def find_reservations_in_range(check_in:, check_out: nil, res_list: get_reservations)
-    return res_list.select { |res| res if
-      res.conflicts_with?(check_in: check_in, check_out: check_out) }
+    return res_list.select { |res| 
+      res if !res.is_held? && res.conflicts_with?(check_in: check_in,
+        check_out: check_out) }
   end
 
 

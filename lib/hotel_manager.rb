@@ -18,7 +18,7 @@ module Hotel
     end
 
     def reserve_room(check_in, check_out)
-      reserve_room_with_info(get_new_reservation_info(check_in, check_out))
+      reserve_room_with_info(check_in, check_out)
     end
 
     def get_reservations_on_date(date)
@@ -33,11 +33,17 @@ module Hotel
 
     end
 
+    def reserve_room_in_block(block_id)
+       get_block_rooms(block_id).reserve_room
+    end
+
     private
 
-    def reserve_room_with_info(reservation_info)
-      @reservations << Reservation.new(reservation_info)
-      return reservation_info
+    def reserve_room_with_info(check_in, check_out)
+      res_info = get_new_reservation_info(check_in, check_out)
+      res_info.merge!({id: @reservations.size + 1})
+      @reservations << Reservation.new(res_info)
+      # return reservation_info
     end
 
      def get_block_rooms(id)
