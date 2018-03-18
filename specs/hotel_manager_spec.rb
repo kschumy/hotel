@@ -231,7 +231,8 @@ describe 'HotelManager class' do
     end
 
     it 'only gets rooms that are available' do
-      rooms_before = @manager.get_available_rooms(Date.new(2018,2,3), Date.new(2018,2,5))
+      rooms_before = @manager.get_available_rooms(Date.new(2018,2,3),
+        Date.new(2018,2,5))
       @manager.reserve_room(Date.new(2018,2,3), Date.new(2018,2,5))
       rooms_after = @manager.get_available_rooms(Date.new(2018,2,3),
         Date.new(2018,2,5))
@@ -239,7 +240,7 @@ describe 'HotelManager class' do
       rooms_after.size.must_equal rooms_before.size - 1
     end
 
-    
+
     it 'throws error if invalid date value' do
       proc {
         @manager.reserve_room("not date!", Date.new(2018,2,6))

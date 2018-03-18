@@ -11,13 +11,13 @@ describe 'Block class' do
     end
 
     it 'is an instance of HotelManager' do
-      test_info = {rooms: Set[1, 2], check_in: Date.new(2018,2,5),
+      test_info = {rooms: [1, 2], check_in: Date.new(2018,2,5),
         check_out: Date.new(2018,2,7)}
       Hotel::Block.new(test_info).must_be_instance_of Hotel::Block
     end
 
     it 'has an id' do
-      test_info = {rooms: Set[1, 2], check_in: Date.new(2018,3,5),
+      test_info = {rooms: [1], check_in: Date.new(2018,3,5),
         check_out: Date.new(2018,3,7)}
       expected_id = Hotel::Block.get_all_blocks.size + 1
       manager = Hotel::Block.new(test_info)
@@ -27,7 +27,7 @@ describe 'Block class' do
     end
 
     it 'has an check in date' do
-      test_info = {rooms: Set[1, 2], check_in: Date.new(2018,1,5),
+      test_info = {rooms: [1, 2], check_in: Date.new(2018,1,5),
         check_out: Date.new(2018,1,7)}
       manager = Hotel::Block.new(test_info)
 
@@ -36,7 +36,7 @@ describe 'Block class' do
     end
 
     it 'has an check out date' do
-      test_info = {rooms: Set[1, 2], check_in: Date.new(2018,1,9),
+      test_info = {rooms: [1, 2], check_in: Date.new(2018,1,9),
         check_out: Date.new(2018,1,11)}
       manager = Hotel::Block.new(test_info)
 
@@ -44,19 +44,22 @@ describe 'Block class' do
       manager.check_out.must_equal test_info[:check_out]
     end
 
-  
+    it 'throw error if too many rooms' do
+      proc {
+        test_info = {rooms: [1, 2, 3, 4, 5, 6], check_in: Date.new(2016,1,9),
+          check_out: Date.new(2016,1,11)}
+        Hotel::Block.new(test_info)
+      }.must_raise ArgumentError
+    end
+
+
     #
     # it 'has an id' do
     #   @manager.must_respond_to :id
     #   expected_id = Hotel::Block.get_all_blocks.size + 1
     #   Hotel::Block.new(@test_info).id.must_equal expected_id
     # end
-    # it 'throw error if invalid id' do
-    #   proc {
-    #     # @test_info[:id] = nil
-    #     manager = Hotel::Block.new(@test_info)
-    #   }.must_raise ArgumentError
-    # end
+
   end # end of 'Initializer'
 
   describe 'Initializer' do
